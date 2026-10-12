@@ -1,1 +1,100 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Anime Gallery</title><style>*{box-sizing:border-box}body{margin:0;background:#0d0d14;color:#fff;font-family:system-ui,Arial}header{padding:24px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #272737}h1{font-size:24px;margin:0}header span{color:#c8a8ff}main{max-width:1250px;margin:auto;padding:25px 18px}.hero{position:relative;display:block;border-radius:18px;overflow:hidden;background:#222;aspect-ratio:2.4}.hero img{width:100%;height:100%;object-fit:cover;object-position:center 38%}.hero strong{position:absolute;bottom:0;left:0;right:0;padding:45px 25px 20px;background:linear-gradient(transparent,#000b);font-size:clamp(22px,4vw,40px)}h2{margin:35px 0 18px}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:17px}.item{display:block;background:#1a1a26;border:1px solid #303044;border-radius:14px;overflow:hidden;color:#fff;text-decoration:none;transition:transform .2s}.item:hover{transform:translateY(-5px)}.item img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}.item b{display:block;padding:13px}footer{text-align:center;color:#aaa;padding:45px 10px}@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hero{aspect-ratio:1.65}header{padding:18px}}</style></head><body><header><h1>ANIME <span>GALLERY</span></h1><span>Khám phá bộ sưu tập</span></header><main><a class="hero" href="https://shopee.vn/" target="_blank" rel="noopener sponsored"><img src="images/03.jpg" alt="Banner chính" onerror="this.style.opacity='.15'"><strong>Bộ sưu tập nổi bật</strong></a><h2>Khám phá hình ảnh</h2><div class="grid" id="gallery"></div></main><footer>Anime Gallery • Demo</footer><script>const photos=[1,2,4,5,6,7,8,9,10,11];const links=photos.map(()=> 'https://shopee.vn/');document.getElementById('gallery').innerHTML=photos.map((n,i)=>'<a class="item" href="'+links[i]+'" target="_blank" rel="noopener sponsored"><img loading="lazy" src="images/'+String(n).padStart(2,'0')+'.jpg" alt="Ảnh '+n+'"><b>Bộ sưu tập '+(i+1)+'</b></a>').join('');</script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0b13">
+<title>Anime Gallery | Bộ sưu tập</title>
+<meta name="description" content="Khám phá bộ sưu tập hình ảnh tuyển chọn.">
+<style>
+:root{--bg:#0b0b13;--panel:#171723;--line:#303044;--text:#f6f3ff;--muted:#b3adbf;--accent:#c9a0ff;--accent2:#ff9bbd}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse 70% 26% at 50% 0%,#2b1b40 0%,transparent 78%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}a{color:inherit;text-decoration:none}
+.topbar{border-bottom:1px solid #ffffff12;background:#0b0b13b8;backdrop-filter:blur(16px);position:sticky;top:0;z-index:10}.nav{max-width:1260px;margin:auto;min-height:74px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}.logo{font-weight:900;font-size:21px;letter-spacing:.09em}.logo span{color:var(--accent)}.navlink{font-size:14px;color:var(--muted)}.navlink:hover{color:white}
+main{max-width:1260px;margin:auto;padding:36px 24px 0}.eyebrow{color:var(--accent);font-weight:800;letter-spacing:.16em;font-size:11px;text-transform:uppercase}.intro{margin:0 0 25px}.intro h1{font-size:clamp(26px,4vw,44px);letter-spacing:-.04em;margin:7px 0 6px}.intro p{color:var(--muted);margin:0;font-size:15px}
+.hero{position:relative;display:block;overflow:hidden;border-radius:24px;min-height:330px;aspect-ratio:2.6;background:#242130;border:1px solid #ffffff1a;isolation:isolate}.hero img{width:100%;height:100%;object-fit:cover;object-position:center 42%;position:absolute;inset:0;transition:transform .6s}.hero:hover img{transform:scale(1.035)}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#090713bf,transparent 70%),linear-gradient(0deg,#090713a8,transparent 60%);z-index:0}.hero-content{position:absolute;z-index:1;left:clamp(22px,4vw,58px);bottom:clamp(22px,4vw,46px);max-width:70%}.hero h2{font-size:clamp(26px,4vw,49px);line-height:1.12;letter-spacing:-.04em;margin:10px 0}.hero p{color:#eee1ff;margin:0 0 19px}.cta{display:inline-flex;align-items:center;gap:9px;background:#f1ddff;color:#24112e;font-weight:800;border-radius:999px;padding:11px 20px;font-size:13px}.cta:after{content:"↗"}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:46px 0 20px}.section-title h2{margin:3px 0 0;font-size:clamp(22px,3vw,30px);letter-spacing:-.03em}.count{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}.card{min-width:0;background:linear-gradient(155deg,#201b2b,#13131d);border:1px solid var(--line);border-radius:17px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}.card:hover{transform:translateY(-6px);border-color:#9d73d4;box-shadow:0 15px 35px #0006}.cover{position:relative;overflow:hidden;background:#292433}.cover img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .4s}.card:hover .cover img{transform:scale(1.06)}.tag{position:absolute;top:11px;left:11px;background:#110c19c9;border:1px solid #ffffff35;border-radius:999px;padding:5px 10px;font-size:10px;font-weight:800;backdrop-filter:blur(8px)}.info{padding:14px 14px 16px}.info h3{margin:0;font-size:15px;line-height:1.4;min-height:42px}.info p{font-size:12px;color:var(--muted);margin:7px 0 12px}.view{font-size:12px;font-weight:800;color:var(--accent)}footer{margin-top:65px;border-top:1px solid #ffffff14;text-align:center;color:#888395;font-size:13px;padding:29px 16px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:650px){.nav{min-height:62px;padding:0 16px}.logo{font-size:17px}.navlink{font-size:12px}main{padding:25px 14px 0}.hero{min-height:310px;aspect-ratio:1.25;border-radius:17px}.hero img{object-position:64% center}.hero-content{max-width:90%;left:20px;bottom:24px}.hero h2{font-size:30px}.hero p{font-size:13px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{border-radius:13px}.info{padding:11px}.info h3{font-size:13px;min-height:36px}.section-title{margin-top:34px}.tag{font-size:9px}}
+</style>
+</head>
+<body>
+<header class="topbar"><nav class="nav"><a class="logo" href="./" id="logo">ANIME <span>GALLERY</span></a><a class="navlink" href="#gallery">Khám phá bộ sưu tập ↓</a></nav></header>
+<main>
+<section class="intro"><div class="eyebrow" id="eyebrow"></div><h1 id="pageTitle"></h1><p id="pageDescription"></p></section>
+<a id="heroLink" class="hero" target="_blank" rel="noopener noreferrer sponsored"><img id="heroImage" src="images/03.jpg" alt="Banner chính"><div class="hero-content"><div class="eyebrow" id="heroLabel"></div><h2 id="heroTitle"></h2><p id="heroDescription"></p><span class="cta" id="heroButton"></span></div></a>
+<section id="gallery"><div class="section-title"><div><div class="eyebrow">BỘ SƯU TẬP</div><h2 id="sectionTitle"></h2></div><span class="count" id="itemCount"></span></div><div class="grid" id="cards"></div></section>
+</main><footer id="footer"></footer>
+<script>
+/* =====================================================================
+   KHU VỰC CHỈNH SỬA — ANH CHỈ CẦN SỬA PHẦN NÀY
+   Đổi chữ trong dấu nháy "..." rồi Commit changes trên GitHub.
+   Muốn thay ảnh: tải ảnh mới vào thư mục images và đổi image.
+   Muốn thay link Shopee: sửa link tương ứng (đầy đủ https://...).
+   ===================================================================== */
+const CONFIG = {
+  websiteName: "ANIME GALLERY",
+  smallLabel: "KHÁM PHÁ THẾ GIỚI HÌNH ẢNH",
+  pageTitle: "Bộ sưu tập nổi bật",
+  pageDescription: "Khám phá những hình ảnh ấn tượng được tuyển chọn dành cho bạn.",
+  sectionTitle: "Khám phá bộ sưu tập",
+  footerText: "© 2026 Anime Gallery. All rights reserved.",
+
+  // ===== BANNER LỚN — ẢNH SỐ 03 =====
+  banner: {
+    image: "images/03.jpg",
+    label: "LỰA CHỌN NỔI BẬT",
+    title: "Khám phá bộ sưu tập mới",
+    description: "Những hình ảnh ấn tượng đang chờ bạn.",
+    button: "Khám phá ngay",
+    link: "https://shopee.vn/"
+  },
+
+  // ===== 10 MỤC ẢNH NHỎ — SỬA title, description, link TỪNG MỤC =====
+  items: [
+    { image:"images/01.jpg", title:"Bộ sưu tập 01", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/02.jpg", title:"Bộ sưu tập 02", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/04.jpg", title:"Bộ sưu tập 03", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/05.jpg", title:"Bộ sưu tập 04", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/06.jpg", title:"Bộ sưu tập 05", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/07.jpg", title:"Bộ sưu tập 06", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/08.jpg", title:"Bộ sưu tập 07", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/09.jpg", title:"Bộ sưu tập 08", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/10.jpg", title:"Bộ sưu tập 09", description:"Khám phá ngay", link:"https://shopee.vn/" },
+    { image:"images/11.jpg", title:"Bộ sưu tập 10", description:"Khám phá ngay", link:"https://shopee.vn/" }
+  ]
+};
+/* ======================= HẾT KHU VỰC CHỈNH SỬA ======================= */
+
+// PHẦN HIỂN THỊ TỰ ĐỘNG — KHÔNG CẦN SỬA
+const byId = id => document.getElementById(id);
+const setText = (id, value) => byId(id).textContent = value;
+const safeLink = url => /^https:\/\//i.test(url) ? url : "https://shopee.vn/";
+document.title = CONFIG.websiteName + " | " + CONFIG.pageTitle;
+setText("logo", CONFIG.websiteName);
+setText("eyebrow", CONFIG.smallLabel);
+setText("pageTitle", CONFIG.pageTitle);
+setText("pageDescription", CONFIG.pageDescription);
+setText("sectionTitle", CONFIG.sectionTitle);
+setText("footer", CONFIG.footerText);
+byId("heroImage").src = CONFIG.banner.image;
+byId("heroLink").href = safeLink(CONFIG.banner.link);
+setText("heroLabel", CONFIG.banner.label);
+setText("heroTitle", CONFIG.banner.title);
+setText("heroDescription", CONFIG.banner.description);
+setText("heroButton", CONFIG.banner.button);
+setText("itemCount", CONFIG.items.length + " bộ sưu tập");
+const cards = byId("cards");
+CONFIG.items.forEach((item,index)=>{
+  const a=document.createElement("a");a.className="card";a.href=safeLink(item.link);a.target="_blank";a.rel="noopener noreferrer sponsored";
+  const cover=document.createElement("div");cover.className="cover";
+  const img=document.createElement("img");img.src=item.image;img.alt=item.title;img.loading="lazy";
+  const tag=document.createElement("span");tag.className="tag";tag.textContent="MỤC "+String(index+1).padStart(2,"0");
+  cover.append(img,tag);
+  const info=document.createElement("div");info.className="info";
+  const title=document.createElement("h3");title.textContent=item.title;
+  const desc=document.createElement("p");desc.textContent=item.description;
+  const view=document.createElement("span");view.className="view";view.textContent="Xem ngay ↗";
+  info.append(title,desc,view);a.append(cover,info);cards.append(a);
+});
+</script>
+</body>
+</html>
