@@ -29,6 +29,18 @@ body:before{content:"";position:fixed;inset:-20%;z-index:-3;pointer-events:none;
 .motion-off:before{animation:none}
 @media(prefers-reduced-motion:reduce){body:before,.fantasy-petal,.fantasy-spark{animation:none!important}.fantasy-petal{display:none}}
 @media(max-width:650px){.motion-toggle{font-size:11px;padding:8px}.navlink{display:none}}
+
+/* NAVIGATION LIKE CINEMA CATALOG */
+.catalog-toolbar{max-width:1260px;margin:0 auto 22px;padding:0 24px}
+.catalog-search{display:flex;align-items:center;gap:12px;background:#17171e;border:1px solid #3a3441;border-radius:999px;padding:0 17px;max-width:480px;height:43px;margin:18px auto;color:#b9a9c6}
+.catalog-search input{background:transparent;border:0;outline:0;color:#fff;width:100%;font:inherit;font-size:14px}
+.catalog-search input::placeholder{color:#aaa1b1}
+.catalog-menu{display:flex;overflow-x:auto;scrollbar-width:thin;background:#1b1b23;border:1px solid #34303b;border-radius:12px;white-space:nowrap}
+.catalog-menu button{flex:1 0 auto;border:0;border-right:1px solid #34303b;padding:16px 13px;background:transparent;color:#c8c4ce;font:inherit;font-size:13px;font-weight:750;cursor:pointer;transition:background .2s,color .2s}
+.catalog-menu button:last-child{border-right:0}.catalog-menu button:hover{background:#30263b;color:#fff}.catalog-menu button.active{color:#ff8b77;background:#32222f;box-shadow:inset 0 -3px #ff5c79}
+.catalog-menu .menu-icon{margin-right:7px;font-size:15px}
+.search-empty{padding:24px;text-align:center;color:#c8c1d1;border:1px dashed #65546f;border-radius:14px;grid-column:1/-1}
+@media(max-width:650px){.catalog-toolbar{padding:0 14px;margin-bottom:15px}.catalog-search{margin:12px auto}.catalog-menu button{padding:13px 14px;font-size:12px}}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Anime Gallery">
@@ -44,6 +56,7 @@ body:before{content:"";position:fixed;inset:-20%;z-index:-3;pointer-events:none;
 </head>
 <body><div id="fantasy-bg" aria-hidden="true"></div>
 <header class="topbar"><nav class="nav"><a class="logo" href="./" id="logo">ANIME <span>GALLERY</span></a><div style="display:flex;align-items:center;gap:16px"><a class="navlink" href="#gallery">Khám phá bộ sưu tập ↓</a><button class="motion-toggle" id="motionToggle" type="button" aria-pressed="true">✦ Tắt nền động</button></div></nav></header>
+<div class="catalog-toolbar"><label class="catalog-search"><span aria-hidden="true">⌕</span><input id="catalogSearch" type="search" placeholder="Nhập từ khóa tìm kiếm..." aria-label="Tìm kiếm bộ sưu tập"></label><nav class="catalog-menu" id="catalogMenu" aria-label="Danh mục"></nav></div>
 <main>
 <section class="intro"><div class="eyebrow" id="eyebrow"></div><h1 id="pageTitle"></h1><p id="pageDescription"></p></section>
 <a id="heroLink" class="hero" target="_blank" rel="noopener noreferrer sponsored"><img id="heroImage" src="images/03.jpg" alt="Banner chính"><div class="hero-content"><div class="eyebrow" id="heroLabel"></div><h2 id="heroTitle"></h2><p id="heroDescription"></p><span class="cta" id="heroButton"></span></div></a>
@@ -60,6 +73,8 @@ const CONFIG = {
   // Nền động: đổi true thành false nếu muốn tắt mặc định
   animatedBackground: true,
   websiteName: "ANIME GALLERY",
+  // ===== THANH MENU — ANH CÓ THỂ ĐỔI TÊN TỪNG Ô =====
+  menuNames: ["Trang chủ", "Thể loại", "Phim Lẻ", "Đang Chiếu", "Lịch Chiếu", "Hoàn Thành", "Top 10 HH3D", "Đánh Giá Cao"],
   smallLabel: "KHÁM PHÁ THẾ GIỚI HÌNH ẢNH",
   pageTitle: "Bộ sưu tập nổi bật",
   pageDescription: "Khám phá những hình ảnh ấn tượng được tuyển chọn dành cho bạn.",
@@ -144,6 +159,41 @@ setText("heroDescription", CONFIG.banner.description);
 setText("heroButton", CONFIG.banner.button);
 setText("itemCount", CONFIG.items.length + " bộ sưu tập");
 const cards = byId("cards");
+const searchBox=byId("catalogSearch");
+const menu=byId("catalogMenu");
+const icons=["⌂","▦","▤","◉","▦","✓","♜","☆"];
+let activeCategory=0;
+CONFIG.menuNames.forEach((name,i)=>{
+ const btn=document.createElement("button");btn.type="button";btn.className=i===0?"active":"";
+ const symbol=document.createElement("span");symbol.className="menu-icon";symbol.textContent=icons[i]||"◇";
+ btn.append(symbol,document.createTextNode(name));
+ btn.addEventListener("click",()=>{
+   activeCategory=i;
+   menu.querySelectorAll("button").forEach((b,j)=>b.classList.toggle("active",i===j));
+   renderCatalog();
+   byId("gallery").scrollIntoView({behavior:"smooth",block:"start"});
+ });
+ menu.append(btn);
+});
+searchBox.addEventListener("input",renderCatalog);
+function renderCatalog(){
+ const q=searchBox.value.trim().toLocaleLowerCase("vi");
+ const all=Array.from(cards.querySelectorAll(".card"));
+ let visible=0;
+ all.forEach((card,i)=>{
+   const item=CONFIG.items[i];
+   const matchesText=(item.title+" "+item.description).toLocaleLowerCase("vi").includes(q);
+   // Các nhóm là chế độ demo, chia ảnh có sẵn để thử menu.
+   const matchesCategory=activeCategory===0||activeCategory===1||((i+(activeCategory-2))%3!==0);
+   const show=matchesText&&matchesCategory;
+   card.hidden=!show;card.style.display=show?"":"none";if(show)visible++;
+ });
+ let empty=byId("catalogEmpty");
+ if(!visible&&!empty){empty=document.createElement("div");empty.id="catalogEmpty";empty.className="search-empty";empty.textContent="Không tìm thấy nội dung phù hợp.";cards.append(empty)}
+ if(empty)empty.hidden=visible>0;
+ setText("itemCount",visible+" / "+CONFIG.items.length+" bộ sưu tập");
+}
+
 CONFIG.items.forEach((item,index)=>{
   const a=document.createElement("a");a.className="card";a.href=safeLink(item.link);a.target="_blank";a.rel="noopener noreferrer sponsored";
   const cover=document.createElement("div");cover.className="cover";
@@ -156,6 +206,7 @@ CONFIG.items.forEach((item,index)=>{
   const view=document.createElement("span");view.className="view";view.textContent="Xem ngay ↗";
   info.append(title,desc,view);a.append(cover,info);cards.append(a);
 });
+renderCatalog();
 </script>
 </body>
 </html>
