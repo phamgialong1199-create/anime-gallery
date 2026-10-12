@@ -14,10 +14,25 @@ main{max-width:1260px;margin:auto;padding:36px 24px 0}.eyebrow{color:var(--accen
 .hero{position:relative;display:block;overflow:hidden;border-radius:24px;min-height:330px;aspect-ratio:2.6;background:#242130;border:1px solid #ffffff1a;isolation:isolate}.hero img{width:100%;height:100%;object-fit:cover;object-position:center 42%;position:absolute;inset:0;transition:transform .6s}.hero:hover img{transform:scale(1.035)}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#090713bf,transparent 70%),linear-gradient(0deg,#090713a8,transparent 60%);z-index:0}.hero-content{position:absolute;z-index:1;left:clamp(22px,4vw,58px);bottom:clamp(22px,4vw,46px);max-width:70%}.hero h2{font-size:clamp(26px,4vw,49px);line-height:1.12;letter-spacing:-.04em;margin:10px 0}.hero p{color:#eee1ff;margin:0 0 19px}.cta{display:inline-flex;align-items:center;gap:9px;background:#f1ddff;color:#24112e;font-weight:800;border-radius:999px;padding:11px 20px;font-size:13px}.cta:after{content:"↗"}
 .section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:46px 0 20px}.section-title h2{margin:3px 0 0;font-size:clamp(22px,3vw,30px);letter-spacing:-.03em}.count{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px}.card{min-width:0;background:linear-gradient(155deg,#201b2b,#13131d);border:1px solid var(--line);border-radius:17px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}.card:hover{transform:translateY(-6px);border-color:#9d73d4;box-shadow:0 15px 35px #0006}.cover{position:relative;overflow:hidden;background:#292433}.cover img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .4s}.card:hover .cover img{transform:scale(1.06)}.tag{position:absolute;top:11px;left:11px;background:#110c19c9;border:1px solid #ffffff35;border-radius:999px;padding:5px 10px;font-size:10px;font-weight:800;backdrop-filter:blur(8px)}.info{padding:14px 14px 16px}.info h3{margin:0;font-size:15px;line-height:1.4;min-height:42px}.info p{font-size:12px;color:var(--muted);margin:7px 0 12px}.view{font-size:12px;font-weight:800;color:var(--accent)}footer{margin-top:65px;border-top:1px solid #ffffff14;text-align:center;color:#888395;font-size:13px;padding:29px 16px}
 @media(max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:650px){.nav{min-height:62px;padding:0 16px}.logo{font-size:17px}.navlink{font-size:12px}main{padding:25px 14px 0}.hero{min-height:310px;aspect-ratio:1.25;border-radius:17px}.hero img{object-position:64% center}.hero-content{max-width:90%;left:20px;bottom:24px}.hero h2{font-size:30px}.hero p{font-size:13px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{border-radius:13px}.info{padding:11px}.info h3{font-size:13px;min-height:36px}.section-title{margin-top:34px}.tag{font-size:9px}}
+
+/* ANIMATED FANTASY BACKGROUND */
+body{position:relative;isolation:isolate;background:#090913}
+body:before{content:"";position:fixed;inset:-20%;z-index:-3;pointer-events:none;background:radial-gradient(ellipse at 18% 28%,#6e2f8952,transparent 42%),radial-gradient(ellipse at 82% 65%,#37528b4d,transparent 43%),radial-gradient(ellipse at 55% 95%,#9a3e7250,transparent 46%);filter:blur(38px);animation:ambientFlow 18s ease-in-out infinite alternate}
+@keyframes ambientFlow{0%{transform:translate3d(-3%,0,0) scale(1)}100%{transform:translate3d(4%,-3%,0) scale(1.13)}}
+#fantasy-bg{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.fantasy-petal{position:absolute;top:-12vh;width:var(--size);height:calc(var(--size)*.7);border-radius:85% 5% 85% 12%;background:linear-gradient(135deg,#ffdaee,#ed93d2 65%,#c57db8);opacity:var(--opacity);filter:drop-shadow(0 0 6px #ffc2e455);animation:petalFall var(--duration) linear var(--delay) infinite;transform:rotate(35deg)}
+.fantasy-spark{position:absolute;width:var(--size);height:var(--size);border-radius:50%;background:#fff0fa;box-shadow:0 0 9px 3px #f3aaff88;animation:sparkle var(--duration) ease-in-out var(--delay) infinite alternate}
+@keyframes petalFall{0%{transform:translate3d(0,-10vh,0) rotate(0deg)}50%{transform:translate3d(55px,55vh,0) rotate(220deg)}100%{transform:translate3d(-35px,120vh,0) rotate(480deg)}}
+@keyframes sparkle{0%{opacity:.1;transform:scale(.45)}100%{opacity:.8;transform:scale(1.4)}}
+.motion-toggle{border:1px solid #ffffff44;background:#1c152ac9;color:#f4e8ff;border-radius:999px;padding:9px 13px;font:inherit;font-size:12px;cursor:pointer}
+.motion-off .fantasy-petal,.motion-off .fantasy-spark{display:none}
+.motion-off:before{animation:none}
+@media(prefers-reduced-motion:reduce){body:before,.fantasy-petal,.fantasy-spark{animation:none!important}.fantasy-petal{display:none}}
+@media(max-width:650px){.motion-toggle{font-size:11px;padding:8px}.navlink{display:none}}
 </style>
 </head>
-<body>
-<header class="topbar"><nav class="nav"><a class="logo" href="./" id="logo">ANIME <span>GALLERY</span></a><a class="navlink" href="#gallery">Khám phá bộ sưu tập ↓</a></nav></header>
+<body><div id="fantasy-bg" aria-hidden="true"></div>
+<header class="topbar"><nav class="nav"><a class="logo" href="./" id="logo">ANIME <span>GALLERY</span></a><div style="display:flex;align-items:center;gap:16px"><a class="navlink" href="#gallery">Khám phá bộ sưu tập ↓</a><button class="motion-toggle" id="motionToggle" type="button" aria-pressed="true">✦ Tắt nền động</button></div></nav></header>
 <main>
 <section class="intro"><div class="eyebrow" id="eyebrow"></div><h1 id="pageTitle"></h1><p id="pageDescription"></p></section>
 <a id="heroLink" class="hero" target="_blank" rel="noopener noreferrer sponsored"><img id="heroImage" src="images/03.jpg" alt="Banner chính"><div class="hero-content"><div class="eyebrow" id="heroLabel"></div><h2 id="heroTitle"></h2><p id="heroDescription"></p><span class="cta" id="heroButton"></span></div></a>
@@ -30,7 +45,7 @@ main{max-width:1260px;margin:auto;padding:36px 24px 0}.eyebrow{color:var(--accen
    Muốn thay ảnh: tải ảnh mới vào thư mục images và đổi image.
    Muốn thay link Shopee: sửa link tương ứng (đầy đủ https://...).
    ===================================================================== */
-const CONFIG = {
+const CONFIG = {\n  // Nền động: đổi true thành false nếu muốn tắt mặc định\n  animatedBackground: true,
   websiteName: "ANIME GALLERY",
   smallLabel: "KHÁM PHÁ THẾ GIỚI HÌNH ẢNH",
   pageTitle: "Bộ sưu tập nổi bật",
@@ -65,6 +80,39 @@ const CONFIG = {
 /* ======================= HẾT KHU VỰC CHỈNH SỬA ======================= */
 
 // PHẦN HIỂN THỊ TỰ ĐỘNG — KHÔNG CẦN SỬA
+const motionBtn=document.getElementById("motionToggle");
+const bg=document.getElementById("fantasy-bg");
+const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let motionEnabled=CONFIG.animatedBackground && !reducedMotion;
+function applyMotion(){
+  document.body.classList.toggle("motion-off",!motionEnabled);
+  motionBtn.textContent=motionEnabled?"✦ Tắt nền động":"✧ Bật nền động";
+  motionBtn.setAttribute("aria-pressed",String(motionEnabled));
+  bg.replaceChildren();
+  if(!motionEnabled)return;
+  const count=window.innerWidth<650?13:27;
+  const fragment=document.createDocumentFragment();
+  for(let i=0;i<count;i++){
+    const petal=document.createElement("span");petal.className="fantasy-petal";
+    petal.style.left=(i*37.7%100)+"%";
+    petal.style.setProperty("--size",(8+(i*7%10))+"px");
+    petal.style.setProperty("--opacity",String(.25+(i%5)*.1));
+    petal.style.setProperty("--duration",(13+i%12)+"s");
+    petal.style.setProperty("--delay",(-i*1.7)+"s");
+    fragment.append(petal);
+  }
+  for(let i=0;i<(window.innerWidth<650?14:32);i++){
+    const spark=document.createElement("span");spark.className="fantasy-spark";
+    spark.style.left=(i*41.37%100)+"%";spark.style.top=(i*27.19%100)+"%";
+    spark.style.setProperty("--size",(1+i%3)+"px");
+    spark.style.setProperty("--duration",(2+i%5)+"s");
+    spark.style.setProperty("--delay",(-i*.4)+"s");
+    fragment.append(spark);
+  }
+  bg.append(fragment);
+}
+motionBtn.addEventListener("click",()=>{motionEnabled=!motionEnabled;applyMotion()});
+applyMotion();
 const byId = id => document.getElementById(id);
 const setText = (id, value) => byId(id).textContent = value;
 const safeLink = url => /^https:\/\//i.test(url) ? url : "https://shopee.vn/";
